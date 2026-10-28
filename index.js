@@ -309,6 +309,7 @@
     }, true);
 
     function init() {
+        alert("[個人酒館助手] 程式已載入。");
         console.info("[個人酒館助手] init");
         addEntryButtons();
         updateFloatingBall();
