@@ -14,8 +14,13 @@
 }
 
 #pta-panel.pta-open {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    inset: 5vh 4vw !important;
+    z-index: 2147483000 !important;
 }
 
 #pta-panel [hidden],
@@ -198,4 +203,23 @@
     .pta-feature-view {
         padding: 12px;
     }
+}
+
+
+/* Ensure the chat entry reads as a compact icon button instead of a text box. */
+#pta-chat-entry {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    line-height: 1;
+}
+
+#pta-chat-entry i {
+    font-size: 16px;
+    pointer-events: none;
 }
