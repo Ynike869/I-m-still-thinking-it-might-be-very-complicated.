@@ -41,19 +41,22 @@
     function openAssistant() {
         try {
             if (!panel || !document.body.contains(panel)) createPanel();
+            if (!panel.open && typeof panel.showModal === "function") {
+                panel.showModal();
+            }
             panel.classList.add("pta-open");
             panel.style.display = "flex";
             panel.style.visibility = "visible";
             panel.style.opacity = "1";
-            // 將面板放到 html 根節點，避開酒館主介面可能建立的 stacking context。
-            if (panel.parentElement !== document.documentElement) {
-                document.documentElement.appendChild(panel);
-            }
+            // 使用原生 dialog 的 top layer，避免被酒館其他介面或 stacking context 蓋住。
             Object.assign(panel.style, {
                 display: "flex",
                 visibility: "visible",
                 opacity: "1",
                 position: "fixed",
+                margin: "0",
+                maxWidth: "none",
+                maxHeight: "none",
                 top: "5vh",
                 right: "4vw",
                 bottom: "5vh",
@@ -88,12 +91,13 @@
     function closeAssistant() {
         if (!panel) return;
         panel.classList.remove("pta-open");
+        if (panel.open && typeof panel.close === "function") panel.close();
         panel.style.display = "none";
         panel.setAttribute("aria-hidden", "true");
     }
 
     function createPanel() {
-        panel = document.createElement("section");
+        panel = document.createElement("dialog");
         panel.id = "pta-panel";
         panel.className = "pta-panel";
         panel.setAttribute("role", "dialog");
