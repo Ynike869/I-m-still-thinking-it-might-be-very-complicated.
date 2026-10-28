@@ -19,7 +19,13 @@
     visibility: visible !important;
     opacity: 1 !important;
     position: fixed !important;
-    inset: 5vh 4vw !important;
+    top: 5vh !important;
+    right: 4vw !important;
+    bottom: 5vh !important;
+    left: 4vw !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
     z-index: 2147483000 !important;
 }
 
