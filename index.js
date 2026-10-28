@@ -3,12 +3,31 @@
 
     const STORAGE_KEY = "personal_tavern_assistant_v1";
     const EXTENSION_BASE_URL = (() => {
-        const source = document.currentScript && document.currentScript.src;
-        if (source) return new URL(".", source).href;
+        // 一般載入方式：由目前執行中的 index.js 取得擴充路徑。
+        const current = document.currentScript && document.currentScript.src;
+        if (current) return new URL(".", current).href;
+
+        // 部分酒館版本會以非同步方式執行擴充腳本，這時 currentScript 會是 null。
+        // 改從頁面已載入的 script 標籤反查 index.js。
+        const scripts = Array.from(document.scripts || []);
+        const ownScript = scripts.find((item) =>
+            item.src && /\/index\.js(?:[?#].*)?$/.test(item.src) &&
+            /I-m-still-thinking-it-might-be-very-complicated/i.test(item.src)
+        );
+        if (ownScript) return new URL(".", ownScript.src).href;
+
         if (typeof getExtensionFolderPath === "function") {
-            try { return getExtensionFolderPath(); } catch (error) { /* use fallback below */ }
+            try {
+                const path = getExtensionFolderPath();
+                if (path) return path.endsWith("/") ? path : path + "/";
+            } catch (error) { /* use the standard SillyTavern path below */ }
         }
-        return "";
+
+        // SillyTavern third-party extension 的標準安裝位置。
+        return new URL(
+            "/scripts/extensions/third-party/I-m-still-thinking-it-might-be-very-complicated./",
+            window.location.origin
+        ).href;
     })();
     let artistModuleLoading = null;
     const DEFAULTS = {
