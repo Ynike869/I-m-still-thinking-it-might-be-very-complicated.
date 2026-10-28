@@ -645,7 +645,8 @@ if(ms&&ms.cfg){Object.assign(CFG,ms.cfg);S.layout=CFG.nai_layout||S.layout;S.sor
 if(CFG.nai_fab){try{const p=JSON.parse(CFG.nai_fab);fp=placeFab(p.x,p.y)}catch(e){}}if(CFG.nai_ball!=null)fab.style.display=CFG.nai_ball==='0'?'none':'flex'}
 else{['nai_layout','nai_tab','nai_theme','nai_tagmode','nai_dupskip','nai_autotag','nai_ball','nai_fab','nai_sort'].forEach(k=>{const v=W.localStorage.getItem(k);if(v!=null)CFG[k]=v});if(Object.keys(CFG).length)dbPut({id:'meta-settings',kind:'meta',cfg:CFG})}
 applyTheme();render();if(W===window)showPanel(true)}).catch(e=>W.alert('畫師串庫資料庫錯誤：'+(e&&e.message||e)));
-window.PTAOpenArtistLibrary=()=>showPanel(true);\ntry{eventOn(getButtonEvent('畫師串庫'),menu)}catch(e){}
+window.PTAOpenArtistLibrary=()=>showPanel(true);
+try{eventOn(getButtonEvent('畫師串庫'),menu)}catch(e){}
 toast('畫師串庫已載入');
 }catch(e){window.parent.alert('畫師串庫載入失敗：'+(e&&e.message||e))}})();
 
