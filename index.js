@@ -48,6 +48,7 @@
             panel.style.zIndex = "2147483000";
             panel.setAttribute("aria-hidden", "false");
             showHome();
+            alert("[個人酒館助手] 視窗已建立；若看不到，請回報。");
         } catch (error) {
             console.error("[個人酒館助手] 開啟主介面失敗：", error);
             alert("個人酒館助手開啟失敗，請打開瀏覽器主控台查看錯誤。");
@@ -305,7 +306,6 @@
         if (!entry) return;
         event.preventDefault();
         event.stopPropagation();
-        alert("[個人酒館助手] 已收到入口點擊。");
         openAssistant();
     }, true);
 
