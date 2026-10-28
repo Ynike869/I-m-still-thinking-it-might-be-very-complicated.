@@ -1,0 +1,12 @@
+{
+  "display_name": "個人酒館助手",
+  "loading_order": 10,
+  "requires": [],
+  "optional": [],
+  "js": "index.js",
+  "css": "style.css",
+  "author": "Personal project",
+  "version": "0.1.0",
+  "homePage": "https://github.com/Ynike869/I-m-still-thinking-it-might-be-very-complicated.",
+  "auto_update": true
+}
