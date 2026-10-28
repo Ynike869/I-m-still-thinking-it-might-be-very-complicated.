@@ -2,6 +2,15 @@
     "use strict";
 
     const STORAGE_KEY = "personal_tavern_assistant_v1";
+    const EXTENSION_BASE_URL = (() => {
+        const source = document.currentScript && document.currentScript.src;
+        if (source) return new URL(".", source).href;
+        if (typeof getExtensionFolderPath === "function") {
+            try { return getExtensionFolderPath(); } catch (error) { /* use fallback below */ }
+        }
+        return "";
+    })();
+    let artistModuleLoading = null;
     const DEFAULTS = {
         feature1Enabled: true,
         floatingBallEnabled: false,
@@ -126,7 +135,7 @@
         const content = document.createElement("main");
         content.className = "pta-content";
 
-        const featureButton = createButton("功能 1", "pta-feature-button", openFeature1);
+        const featureButton = createButton("畫師串儲存庫", "pta-feature-button", openFeature1);
         featureButton.id = "pta-feature-1";
         content.appendChild(featureButton);
 
@@ -137,7 +146,7 @@
         const settingsTitle = document.createElement("h3");
         settingsTitle.textContent = "設定";
 
-        const featureRow = createToggleRow("功能 1", "feature1Enabled", "控制主頁面是否顯示此功能。");
+        const featureRow = createToggleRow("畫師串儲存庫", "feature1Enabled", "控制主頁面是否顯示此功能。");
         const ballRow = createToggleRow("懸浮球", "floatingBallEnabled", "開啟後可拖曳懸浮球，位置會自動記住。");
 
         const backButton = createButton("返回主頁", "pta-secondary-button", showHome);
@@ -147,12 +156,14 @@
         featureView.className = "pta-feature-view";
         featureView.hidden = true;
         const featureTitle = document.createElement("h3");
-        featureTitle.textContent = "功能 1";
-        const placeholder = document.createElement("p");
-        placeholder.className = "pta-placeholder";
-        placeholder.textContent = "待製作";
+        featureTitle.textContent = "畫師串儲存庫";
+        const description = document.createElement("p");
+        description.className = "pta-feature-description";
+        description.textContent = "保存、搜尋、編輯與分類你的正面／負面提示詞，並支援 JSON 匯入匯出。資料會保存在這個瀏覽器的本機資料庫。";
+        const launchLibrary = createButton("開啟畫師串儲存庫", "pta-primary-button", launchArtistLibrary);
+        launchLibrary.id = "pta-open-artist-library";
         const featureBack = createButton("返回主頁", "pta-secondary-button", showHome);
-        featureView.append(featureTitle, placeholder, featureBack);
+        featureView.append(featureTitle, description, launchLibrary, featureBack);
 
         panel.append(header, content, settingsView, featureView);
         document.body.appendChild(panel);
@@ -216,6 +227,39 @@
         panel._ptaContent.hidden = true;
         panel._ptaSettingsView.hidden = true;
         panel._ptaFeatureView.hidden = false;
+    }
+
+    async function launchArtistLibrary() {
+        try {
+            if (typeof window.PTAOpenArtistLibrary === "function") {
+                closeAssistant();
+                await window.PTAOpenArtistLibrary();
+                return;
+            }
+            if (!artistModuleLoading) {
+                artistModuleLoading = new Promise((resolve, reject) => {
+                    if (!EXTENSION_BASE_URL) {
+                        reject(new Error("無法取得擴充程式路徑，請重新整理酒館頁面後再試。"));
+                        return;
+                    }
+                    const script = document.createElement("script");
+                    script.src = new URL("modules/artist-prompt-library.js", EXTENSION_BASE_URL).href;
+                    script.onload = resolve;
+                    script.onerror = () => reject(new Error("無法載入畫師串儲存庫模組，請確認 GitHub 更新已同步。"));
+                    document.head.appendChild(script);
+                });
+            }
+            await artistModuleLoading;
+            if (typeof window.PTAOpenArtistLibrary !== "function") {
+                throw new Error("畫師串儲存庫模組載入後沒有找到啟動入口。");
+            }
+            closeAssistant();
+            await window.PTAOpenArtistLibrary();
+        } catch (error) {
+            console.error("[個人酒館助手] 畫師串儲存庫啟動失敗：", error);
+            alert("畫師串儲存庫開啟失敗： " + error.message);
+            artistModuleLoading = null;
+        }
     }
 
     function refreshFeatureVisibility() {
