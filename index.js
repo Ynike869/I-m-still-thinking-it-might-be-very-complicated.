@@ -305,11 +305,11 @@
         if (!entry) return;
         event.preventDefault();
         event.stopPropagation();
+        alert("[個人酒館助手] 已收到入口點擊。");
         openAssistant();
     }, true);
 
     function init() {
-        alert("[個人酒館助手] 程式已載入。");
         console.info("[個人酒館助手] init");
         addEntryButtons();
         updateFloatingBall();
