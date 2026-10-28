@@ -298,6 +298,16 @@
         }
     }
 
+    document.addEventListener("click", function (event) {
+        const entry = event.target && event.target.closest
+            ? event.target.closest("#pta-chat-entry, #pta-extension-entry, .pta-floating-ball")
+            : null;
+        if (!entry) return;
+        event.preventDefault();
+        event.stopPropagation();
+        openAssistant();
+    }, true);
+
     function init() {
         console.info("[個人酒館助手] init");
         addEntryButtons();
