@@ -45,10 +45,27 @@
             panel.style.display = "flex";
             panel.style.visibility = "visible";
             panel.style.opacity = "1";
-            panel.style.zIndex = "2147483000";
+            // 將面板放到 html 根節點，避開酒館主介面可能建立的 stacking context。
+            if (panel.parentElement !== document.documentElement) {
+                document.documentElement.appendChild(panel);
+            }
+            Object.assign(panel.style, {
+                display: "flex",
+                visibility: "visible",
+                opacity: "1",
+                position: "fixed",
+                inset: "5vh 4vw",
+                width: "auto",
+                height: "auto",
+                zIndex: "2147483647",
+                background: "var(--SmartThemeBlurTintColor, rgba(24, 24, 30, 0.98))",
+                color: "var(--SmartThemeBodyColor, #eee)",
+                border: "1px solid var(--SmartThemeBorderColor, #777)",
+                boxSizing: "border-box",
+                flexDirection: "column"
+            });
             panel.setAttribute("aria-hidden", "false");
             showHome();
-            alert("[個人酒館助手] 視窗已建立；若看不到，請回報。");
         } catch (error) {
             console.error("[個人酒館助手] 開啟主介面失敗：", error);
             alert("個人酒館助手開啟失敗，請打開瀏覽器主控台查看錯誤。");
