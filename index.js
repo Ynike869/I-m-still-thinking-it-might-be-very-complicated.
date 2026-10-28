@@ -299,6 +299,7 @@
     }
 
     function init() {
+        console.info("[個人酒館助手] init");
         addEntryButtons();
         updateFloatingBall();
 
