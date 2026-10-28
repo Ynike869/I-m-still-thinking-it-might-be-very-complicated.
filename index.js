@@ -54,9 +54,13 @@
                 visibility: "visible",
                 opacity: "1",
                 position: "fixed",
-                inset: "5vh 4vw",
+                top: "5vh",
+                right: "4vw",
+                bottom: "5vh",
+                left: "4vw",
                 width: "auto",
                 height: "auto",
+                minHeight: "0",
                 zIndex: "2147483647",
                 background: "var(--SmartThemeBlurTintColor, rgba(24, 24, 30, 0.98))",
                 color: "var(--SmartThemeBodyColor, #eee)",
@@ -66,32 +70,14 @@
             });
             panel.setAttribute("aria-hidden", "false");
             showHome();
-            // 暫時診斷：回報瀏覽器實際算出的顯示狀態與視窗尺寸。
             requestAnimationFrame(() => {
                 const rect = panel.getBoundingClientRect();
-                const computed = window.getComputedStyle(panel);
-                console.info("[個人酒館助手] 面板診斷", {
-                    parent: panel.parentElement && panel.parentElement.tagName,
-                    connected: panel.isConnected,
-                    display: computed.display,
-                    visibility: computed.visibility,
-                    opacity: computed.opacity,
-                    position: computed.position,
-                    zIndex: computed.zIndex,
-                    rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
-                    hidden: panel.hidden
+                console.info("[個人酒館助手] 面板尺寸", {
+                    width: rect.width,
+                    height: rect.height,
+                    top: rect.top,
+                    left: rect.left
                 });
-                alert(
-                    "[個人酒館助手] 面板診斷\\n" +
-                    "已連接頁面：" + panel.isConnected + "\\n" +
-                    "掛載位置：" + (panel.parentElement && panel.parentElement.tagName) + "\\n" +
-                    "display：" + computed.display + "\\n" +
-                    "visibility：" + computed.visibility + "\\n" +
-                    "opacity：" + computed.opacity + "\\n" +
-                    "位置：" + computed.position + "\\n" +
-                    "z-index：" + computed.zIndex + "\\n" +
-                    "尺寸：" + Math.round(rect.width) + " × " + Math.round(rect.height)
-                );
             });
         } catch (error) {
             console.error("[個人酒館助手] 開啟主介面失敗：", error);
