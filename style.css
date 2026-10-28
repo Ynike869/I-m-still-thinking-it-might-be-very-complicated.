@@ -1,14 +1,13 @@
-/* 個人酒館助手：深色玻璃感介面 */
+/* 個人酒館助手 — Instagram 風極簡 UI */
 :root {
-    --pta-bg: rgba(22, 25, 38, 0.97);
-    --pta-panel: rgba(255, 255, 255, 0.045);
-    --pta-panel-hover: rgba(255, 255, 255, 0.085);
-    --pta-line: rgba(173, 190, 255, 0.19);
-    --pta-text: var(--SmartThemeBodyColor, #eef1ff);
-    --pta-muted: rgba(220, 226, 255, 0.66);
-    --pta-accent: #9b9cff;
-    --pta-accent-strong: #7d82ff;
-    --pta-shadow: 0 24px 80px rgba(0, 0, 0, 0.48);
+    --pta-bg: var(--SmartThemeBlurTintColor, #fff);
+    --pta-surface: rgba(128, 128, 128, 0.055);
+    --pta-surface-hover: rgba(128, 128, 128, 0.105);
+    --pta-line: var(--SmartThemeBorderColor, rgba(128, 128, 128, 0.24));
+    --pta-text: var(--SmartThemeBodyColor, #262626);
+    --pta-muted: color-mix(in srgb, var(--pta-text) 58%, transparent);
+    --pta-accent: var(--SmartThemeQuoteColor, #6d7f9f);
+    --pta-shadow: 0 16px 48px rgba(0, 0, 0, 0.16);
 }
 
 #pta-panel {
@@ -24,22 +23,18 @@
     box-sizing: border-box;
     overflow: auto;
     color: var(--pta-text);
-    background:
-        radial-gradient(ellipse at 90% 0%, rgba(126, 130, 255, 0.13), transparent 42%),
-        var(--pta-bg);
+    background: var(--pta-bg);
     border: 1px solid var(--pta-line);
-    border-radius: 20px;
+    border-radius: 16px;
     box-shadow: var(--pta-shadow);
     padding: 0;
     font-family: inherit;
-    -webkit-backdrop-filter: blur(22px);
-    backdrop-filter: blur(22px);
 }
 
 #pta-panel::backdrop {
-    background: rgba(5, 7, 15, 0.68);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.38);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
 }
 
 #pta-panel.pta-open {
@@ -59,7 +54,7 @@
     max-width: none !important;
     max-height: none !important;
     z-index: 2147483000 !important;
-    animation: pta-panel-in 220ms cubic-bezier(.2, .8, .2, 1) both;
+    animation: pta-enter 180ms ease-out both;
 }
 
 #pta-panel [hidden],
@@ -67,9 +62,9 @@
     display: none !important;
 }
 
-@keyframes pta-panel-in {
-    from { opacity: 0; transform: translateY(10px) scale(.985); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes pta-enter {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .pta-header {
@@ -80,37 +75,34 @@
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 16px 18px;
-    background: rgba(15, 18, 30, 0.78);
+    padding: 14px 18px;
+    background: var(--pta-bg);
     border-bottom: 1px solid var(--pta-line);
-    -webkit-backdrop-filter: blur(18px);
-    backdrop-filter: blur(18px);
     z-index: 1;
 }
 
 .pta-title {
-    font-size: 1.05rem;
-    font-weight: 750;
-    letter-spacing: .04em;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
 }
 
 .pta-title::before {
     content: "";
-    display: inline-block;
-    width: 9px;
-    height: 9px;
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
     border-radius: 50%;
     background: var(--pta-accent);
-    box-shadow: 0 0 14px rgba(155, 156, 255, .8);
 }
 
 .pta-header-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
 }
 
 #pta-panel button {
@@ -125,12 +117,7 @@
 #pta-chat-entry,
 .pta-floating-ball {
     cursor: pointer;
-    transition:
-        transform 150ms ease,
-        background-color 150ms ease,
-        border-color 150ms ease,
-        box-shadow 150ms ease,
-        filter 150ms ease;
+    transition: transform 140ms ease, background-color 140ms ease, border-color 140ms ease, opacity 140ms ease;
 }
 
 .pta-text-button,
@@ -138,21 +125,19 @@
 .pta-secondary-button,
 .pta-feature-button {
     color: var(--pta-text);
-    background: var(--pta-panel);
+    background: transparent;
     border: 1px solid var(--pta-line);
-    border-radius: 12px;
-    padding: 9px 13px;
-    font-weight: 600;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-weight: 550;
 }
 
 .pta-text-button:hover,
 .pta-icon-button:hover,
 .pta-secondary-button:hover,
 .pta-feature-button:hover {
-    background: var(--pta-panel-hover);
-    border-color: rgba(155, 156, 255, .62);
-    box-shadow: 0 5px 18px rgba(0, 0, 0, .16);
-    transform: translateY(-1px);
+    background: var(--pta-surface-hover);
+    border-color: var(--pta-accent);
 }
 
 .pta-header button:active,
@@ -161,8 +146,8 @@
 #pta-extension-entry:active,
 #pta-chat-entry:active,
 .pta-floating-ball:active {
-    transform: scale(.96);
-    filter: brightness(1.12);
+    transform: scale(.97);
+    opacity: .82;
 }
 
 #pta-panel button:focus-visible,
@@ -174,21 +159,21 @@
 }
 
 .pta-icon-button {
-    min-width: 36px;
-    min-height: 36px;
-    padding: 5px 10px;
+    min-width: 34px;
+    min-height: 34px;
+    padding: 5px 9px;
     font-size: 1.1rem;
 }
 
 .pta-content,
 .pta-settings-view,
 .pta-feature-view {
-    padding: 20px;
-    animation: pta-content-in 180ms ease both;
+    padding: 18px;
+    animation: pta-content-enter 160ms ease-out both;
 }
 
-@keyframes pta-content-in {
-    from { opacity: 0; transform: translateY(4px); }
+@keyframes pta-content-enter {
+    from { opacity: 0; transform: translateY(3px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -198,25 +183,24 @@
     justify-content: space-between;
     gap: 12px;
     width: 100%;
-    min-height: 58px;
-    margin: 0 0 12px;
-    padding: 16px 18px;
+    min-height: 52px;
+    margin: 0 0 10px;
+    padding: 14px 15px;
     text-align: left;
-    background: linear-gradient(115deg, rgba(155, 156, 255, .12), rgba(255, 255, 255, .035));
-    border-color: rgba(155, 156, 255, .3);
-    border-radius: 14px;
+    background: var(--pta-surface);
+    border-radius: 11px;
 }
 
 .pta-feature-button::after {
     content: "›";
-    color: var(--pta-accent);
-    font-size: 1.5rem;
+    color: var(--pta-muted);
+    font-size: 1.35rem;
     line-height: 1;
-    transition: transform 150ms ease;
+    transition: transform 140ms ease;
 }
 
 .pta-feature-button:hover::after {
-    transform: translateX(3px);
+    transform: translateX(2px);
 }
 
 .pta-setting-row {
@@ -224,7 +208,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 16px 0;
+    padding: 15px 0;
     border-bottom: 1px solid var(--pta-line);
     cursor: pointer;
 }
@@ -241,44 +225,44 @@
 
 .pta-setting-copy small {
     color: var(--pta-muted);
-    line-height: 1.45;
+    line-height: 1.4;
 }
 
 .pta-switch {
     appearance: none;
     -webkit-appearance: none;
     flex: 0 0 auto;
-    width: 48px;
-    height: 28px;
-    border: 1px solid rgba(255, 255, 255, .14);
+    width: 44px;
+    height: 26px;
+    border: 1px solid var(--pta-line);
     border-radius: 999px;
-    background: rgba(255, 255, 255, .13);
+    background: var(--pta-surface-hover);
     position: relative;
     cursor: pointer;
-    transition: background 180ms ease, border-color 180ms ease;
+    transition: background 160ms ease, border-color 160ms ease;
     margin: 0;
 }
 
 .pta-switch::before {
     content: "";
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     top: 3px;
     left: 3px;
     border-radius: 50%;
-    background: #f5f5ff;
-    transition: transform 180ms cubic-bezier(.2, .8, .2, 1);
-    box-shadow: 0 1px 5px rgba(0, 0, 0, .28);
+    background: var(--pta-text);
+    transition: transform 160ms ease;
 }
 
 .pta-switch:checked {
-    background: var(--pta-accent-strong);
+    background: var(--pta-accent);
     border-color: var(--pta-accent);
 }
 
 .pta-switch:checked::before {
-    transform: translateX(20px);
+    transform: translateX(18px);
+    background: #fff;
 }
 
 .pta-switch:focus-visible {
@@ -291,11 +275,11 @@
     display: grid;
     place-items: center;
     color: var(--pta-muted);
-    font-size: 1.05rem;
+    font-size: 1rem;
 }
 
 .pta-secondary-button {
-    min-height: 42px;
+    min-height: 40px;
     margin-top: 12px;
 }
 
@@ -304,13 +288,13 @@
     z-index: 99999;
     right: 18px;
     bottom: 100px;
-    width: 50px;
-    height: 50px;
+    width: 46px;
+    height: 46px;
     border: 1px solid var(--pta-line);
     border-radius: 50%;
-    background: rgba(25, 28, 44, .95);
+    background: var(--pta-bg);
     color: var(--pta-text);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .32);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
     display: grid;
     place-items: center;
     touch-action: none;
@@ -319,8 +303,7 @@
 }
 
 .pta-floating-ball:hover {
-    border-color: var(--pta-accent);
-    box-shadow: 0 0 0 4px rgba(155, 156, 255, .1), 0 8px 24px rgba(0, 0, 0, .32);
+    background: var(--pta-surface-hover);
 }
 
 .pta-floating-ball:active {
@@ -356,11 +339,11 @@
         right: 2vw !important;
         bottom: 2vh !important;
         left: 2vw !important;
-        border-radius: 16px;
+        border-radius: 13px;
     }
 
     .pta-header {
-        padding: 13px 14px;
+        padding: 12px 13px;
         gap: 8px;
     }
 
@@ -370,13 +353,13 @@
 
     .pta-text-button,
     .pta-icon-button {
-        padding: 8px 10px;
+        padding: 7px 9px;
     }
 
     .pta-content,
     .pta-settings-view,
     .pta-feature-view {
-        padding: 16px;
+        padding: 14px;
     }
 }
 
