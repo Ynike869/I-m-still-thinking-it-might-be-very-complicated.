@@ -29,20 +29,35 @@
         const button = document.createElement("button");
         button.type = "button";
         button.className = className;
-        button.textContent = label;
+        if (label === "🧩") {
+            button.innerHTML = '<i class="fa-solid fa-puzzle-piece" aria-hidden="true"></i>';
+        } else {
+            button.textContent = label;
+        }
         button.addEventListener("click", onClick);
         return button;
     }
 
     function openAssistant() {
-        if (!panel) createPanel();
-        panel.classList.add("pta-open");
-        panel.setAttribute("aria-hidden", "false");
+        try {
+            if (!panel || !document.body.contains(panel)) createPanel();
+            panel.classList.add("pta-open");
+            panel.style.display = "flex";
+            panel.style.visibility = "visible";
+            panel.style.opacity = "1";
+            panel.style.zIndex = "2147483000";
+            panel.setAttribute("aria-hidden", "false");
+            showHome();
+        } catch (error) {
+            console.error("[個人酒館助手] 開啟主介面失敗：", error);
+            alert("個人酒館助手開啟失敗，請打開瀏覽器主控台查看錯誤。");
+        }
     }
 
     function closeAssistant() {
         if (!panel) return;
         panel.classList.remove("pta-open");
+        panel.style.display = "none";
         panel.setAttribute("aria-hidden", "true");
     }
 
@@ -258,6 +273,15 @@
             button.id = "pta-chat-entry";
             button.title = "個人酒館助手";
             button.setAttribute("aria-label", "打開個人酒館助手");
+            button.style.width = "38px";
+            button.style.minWidth = "38px";
+            button.style.height = "38px";
+            button.style.display = "inline-flex";
+            button.style.alignItems = "center";
+            button.style.justifyContent = "center";
+            button.style.padding = "0";
+            button.style.borderRadius = "50%";
+            button.style.fontSize = "16px";
             const sendButton = sendForm.querySelector("#send_but");
             if (sendButton && sendButton.parentElement) {
                 sendButton.parentElement.insertBefore(button, sendButton);
