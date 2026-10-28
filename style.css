@@ -123,6 +123,7 @@
 .pta-text-button,
 .pta-icon-button,
 .pta-secondary-button,
+.pta-primary-button,
 .pta-feature-button {
     color: var(--pta-text);
     background: transparent;
@@ -135,6 +136,7 @@
 .pta-text-button:hover,
 .pta-icon-button:hover,
 .pta-secondary-button:hover,
+.pta-primary-button:hover,
 .pta-feature-button:hover {
     background: var(--pta-surface-hover);
     border-color: var(--pta-accent);
@@ -142,6 +144,7 @@
 
 .pta-header button:active,
 .pta-secondary-button:active,
+.pta-primary-button:active,
 .pta-feature-button:active,
 #pta-extension-entry:active,
 #pta-chat-entry:active,
@@ -268,6 +271,23 @@
 .pta-switch:focus-visible {
     outline: 2px solid var(--pta-accent);
     outline-offset: 3px;
+}
+
+
+.pta-feature-description {
+    max-width: 620px;
+    color: var(--pta-muted);
+    line-height: 1.6;
+    margin: 10px 0 18px;
+}
+
+.pta-primary-button {
+    color: var(--pta-text);
+    background: var(--pta-surface);
+    border: 1px solid var(--pta-line);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-weight: 600;
 }
 
 .pta-placeholder {
