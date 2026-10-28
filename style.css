@@ -1,3 +1,16 @@
+/* 個人酒館助手：深色玻璃感介面 */
+:root {
+    --pta-bg: rgba(22, 25, 38, 0.97);
+    --pta-panel: rgba(255, 255, 255, 0.045);
+    --pta-panel-hover: rgba(255, 255, 255, 0.085);
+    --pta-line: rgba(173, 190, 255, 0.19);
+    --pta-text: var(--SmartThemeBodyColor, #eef1ff);
+    --pta-muted: rgba(220, 226, 255, 0.66);
+    --pta-accent: #9b9cff;
+    --pta-accent-strong: #7d82ff;
+    --pta-shadow: 0 24px 80px rgba(0, 0, 0, 0.48);
+}
+
 #pta-panel {
     display: none;
     position: fixed;
@@ -7,19 +20,26 @@
     height: auto;
     max-width: none;
     max-height: none;
-    z-index: 2147483000;
+    min-height: 0;
     box-sizing: border-box;
     overflow: auto;
-    color: var(--SmartThemeBodyColor, #eee);
-    background: var(--SmartThemeBlurTintColor, rgba(24, 24, 30, 0.98));
-    border: 1px solid var(--SmartThemeBorderColor, #777);
-    border-radius: 12px;
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.45);
+    color: var(--pta-text);
+    background:
+        radial-gradient(ellipse at 90% 0%, rgba(126, 130, 255, 0.13), transparent 42%),
+        var(--pta-bg);
+    border: 1px solid var(--pta-line);
+    border-radius: 20px;
+    box-shadow: var(--pta-shadow);
     padding: 0;
+    font-family: inherit;
+    -webkit-backdrop-filter: blur(22px);
+    backdrop-filter: blur(22px);
 }
 
 #pta-panel::backdrop {
-    background: rgba(0, 0, 0, 0.58);
+    background: rgba(5, 7, 15, 0.68);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
 }
 
 #pta-panel.pta-open {
@@ -36,30 +56,55 @@
     width: auto !important;
     height: auto !important;
     min-height: 0 !important;
+    max-width: none !important;
+    max-height: none !important;
     z-index: 2147483000 !important;
+    animation: pta-panel-in 220ms cubic-bezier(.2, .8, .2, 1) both;
 }
 
 #pta-panel [hidden],
-#pta-panel button[hidden],
 .pta-floating-ball[hidden] {
     display: none !important;
+}
+
+@keyframes pta-panel-in {
+    from { opacity: 0; transform: translateY(10px) scale(.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .pta-header {
     position: sticky;
     top: 0;
     display: flex;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 12px 14px;
-    background: var(--SmartThemeBlurTintColor, #222);
-    border-bottom: 1px solid var(--SmartThemeBorderColor, #777);
+    padding: 16px 18px;
+    background: rgba(15, 18, 30, 0.78);
+    border-bottom: 1px solid var(--pta-line);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
     z-index: 1;
 }
 
 .pta-title {
     font-size: 1.05rem;
+    font-weight: 750;
+    letter-spacing: .04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pta-title::before {
+    content: "";
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--pta-accent);
+    box-shadow: 0 0 14px rgba(155, 156, 255, .8);
 }
 
 .pta-header-actions {
@@ -68,49 +113,110 @@
     gap: 8px;
 }
 
+#pta-panel button {
+    font: inherit;
+    -webkit-tap-highlight-color: transparent;
+}
+
 .pta-header button,
 .pta-secondary-button,
 .pta-feature-button,
-#pta-extension-entry {
+#pta-extension-entry,
+#pta-chat-entry,
+.pta-floating-ball {
     cursor: pointer;
+    transition:
+        transform 150ms ease,
+        background-color 150ms ease,
+        border-color 150ms ease,
+        box-shadow 150ms ease,
+        filter 150ms ease;
 }
 
 .pta-text-button,
 .pta-icon-button,
 .pta-secondary-button,
 .pta-feature-button {
-    color: inherit;
-    background: transparent;
-    border: 1px solid var(--SmartThemeBorderColor, #777);
-    border-radius: 8px;
-    padding: 8px 12px;
+    color: var(--pta-text);
+    background: var(--pta-panel);
+    border: 1px solid var(--pta-line);
+    border-radius: 12px;
+    padding: 9px 13px;
+    font-weight: 600;
+}
+
+.pta-text-button:hover,
+.pta-icon-button:hover,
+.pta-secondary-button:hover,
+.pta-feature-button:hover {
+    background: var(--pta-panel-hover);
+    border-color: rgba(155, 156, 255, .62);
+    box-shadow: 0 5px 18px rgba(0, 0, 0, .16);
+    transform: translateY(-1px);
+}
+
+.pta-header button:active,
+.pta-secondary-button:active,
+.pta-feature-button:active,
+#pta-extension-entry:active,
+#pta-chat-entry:active,
+.pta-floating-ball:active {
+    transform: scale(.96);
+    filter: brightness(1.12);
+}
+
+#pta-panel button:focus-visible,
+#pta-chat-entry:focus-visible,
+#pta-extension-entry:focus-visible,
+.pta-floating-ball:focus-visible {
+    outline: 2px solid var(--pta-accent);
+    outline-offset: 3px;
 }
 
 .pta-icon-button {
-    min-width: 34px;
+    min-width: 36px;
+    min-height: 36px;
+    padding: 5px 10px;
     font-size: 1.1rem;
 }
 
 .pta-content,
 .pta-settings-view,
 .pta-feature-view {
-    padding: 16px;
+    padding: 20px;
+    animation: pta-content-in 180ms ease both;
+}
+
+@keyframes pta-content-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .pta-feature-button {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     width: 100%;
-    min-height: 48px;
-    text-align: center;
-    margin-bottom: 12px;
-    background: rgba(127, 127, 127, 0.08);
+    min-height: 58px;
+    margin: 0 0 12px;
+    padding: 16px 18px;
+    text-align: left;
+    background: linear-gradient(115deg, rgba(155, 156, 255, .12), rgba(255, 255, 255, .035));
+    border-color: rgba(155, 156, 255, .3);
+    border-radius: 14px;
 }
 
-.pta-feature-button:hover,
-.pta-secondary-button:hover,
-.pta-text-button:hover,
-.pta-icon-button:hover {
-    filter: brightness(1.15);
+.pta-feature-button::after {
+    content: "›";
+    color: var(--pta-accent);
+    font-size: 1.5rem;
+    line-height: 1;
+    transition: transform 150ms ease;
+}
+
+.pta-feature-button:hover::after {
+    transform: translateX(3px);
 }
 
 .pta-setting-row {
@@ -118,33 +224,38 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--SmartThemeBorderColor, #777);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--pta-line);
     cursor: pointer;
 }
 
 .pta-setting-copy {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
+}
+
+.pta-setting-copy strong {
+    font-weight: 650;
 }
 
 .pta-setting-copy small {
-    opacity: 0.75;
-    line-height: 1.35;
+    color: var(--pta-muted);
+    line-height: 1.45;
 }
 
 .pta-switch {
     appearance: none;
     -webkit-appearance: none;
     flex: 0 0 auto;
-    width: 46px;
-    height: 26px;
+    width: 48px;
+    height: 28px;
+    border: 1px solid rgba(255, 255, 255, .14);
     border-radius: 999px;
-    background: #c83d46;
+    background: rgba(255, 255, 255, .13);
     position: relative;
     cursor: pointer;
-    transition: background 0.18s ease;
+    transition: background 180ms ease, border-color 180ms ease;
     margin: 0;
 }
 
@@ -156,25 +267,36 @@
     top: 3px;
     left: 3px;
     border-radius: 50%;
-    background: #fff;
-    transition: transform 0.18s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    background: #f5f5ff;
+    transition: transform 180ms cubic-bezier(.2, .8, .2, 1);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .28);
 }
 
 .pta-switch:checked {
-    background: #27a65b;
+    background: var(--pta-accent-strong);
+    border-color: var(--pta-accent);
 }
 
 .pta-switch:checked::before {
     transform: translateX(20px);
 }
 
+.pta-switch:focus-visible {
+    outline: 2px solid var(--pta-accent);
+    outline-offset: 3px;
+}
+
 .pta-placeholder {
     min-height: 140px;
     display: grid;
     place-items: center;
-    opacity: 0.75;
-    font-size: 1.1rem;
+    color: var(--pta-muted);
+    font-size: 1.05rem;
+}
+
+.pta-secondary-button {
+    min-height: 42px;
+    margin-top: 12px;
 }
 
 .pta-floating-ball {
@@ -182,13 +304,13 @@
     z-index: 99999;
     right: 18px;
     bottom: 100px;
-    width: 48px;
-    height: 48px;
-    border: 1px solid var(--SmartThemeBorderColor, #777);
+    width: 50px;
+    height: 50px;
+    border: 1px solid var(--pta-line);
     border-radius: 50%;
-    background: var(--SmartThemeBlurTintColor, rgba(30, 30, 35, 0.95));
-    color: var(--SmartThemeBodyColor, #eee);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+    background: rgba(25, 28, 44, .95);
+    color: var(--pta-text);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .32);
     display: grid;
     place-items: center;
     touch-action: none;
@@ -196,33 +318,15 @@
     user-select: none;
 }
 
+.pta-floating-ball:hover {
+    border-color: var(--pta-accent);
+    box-shadow: 0 0 0 4px rgba(155, 156, 255, .1), 0 8px 24px rgba(0, 0, 0, .32);
+}
+
 .pta-floating-ball:active {
     cursor: grabbing;
 }
 
-#pta-chat-entry {
-    min-width: 36px;
-}
-
-@media (max-width: 600px) {
-    #pta-panel {
-        inset: 2vh 2vw;
-        border-radius: 10px;
-    }
-
-    .pta-header {
-        padding: 10px;
-    }
-
-    .pta-content,
-    .pta-settings-view,
-    .pta-feature-view {
-        padding: 12px;
-    }
-}
-
-
-/* Ensure the chat entry reads as a compact icon button instead of a text box. */
 #pta-chat-entry {
     display: inline-flex !important;
     align-items: center;
@@ -238,4 +342,58 @@
 #pta-chat-entry i {
     font-size: 16px;
     pointer-events: none;
+}
+
+#pta-extension-entry {
+    border: 1px solid var(--pta-line);
+    border-radius: 10px;
+    padding: 9px 12px;
+}
+
+@media (max-width: 600px) {
+    #pta-panel.pta-open {
+        top: 2vh !important;
+        right: 2vw !important;
+        bottom: 2vh !important;
+        left: 2vw !important;
+        border-radius: 16px;
+    }
+
+    .pta-header {
+        padding: 13px 14px;
+        gap: 8px;
+    }
+
+    .pta-header-actions {
+        gap: 5px;
+    }
+
+    .pta-text-button,
+    .pta-icon-button {
+        padding: 8px 10px;
+    }
+
+    .pta-content,
+    .pta-settings-view,
+    .pta-feature-view {
+        padding: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #pta-panel.pta-open,
+    .pta-content,
+    .pta-settings-view,
+    .pta-feature-view {
+        animation: none !important;
+    }
+
+    #pta-panel button,
+    #pta-chat-entry,
+    #pta-extension-entry,
+    .pta-floating-ball,
+    .pta-switch,
+    .pta-switch::before {
+        transition: none !important;
+    }
 }
